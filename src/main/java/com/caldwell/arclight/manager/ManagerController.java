@@ -367,7 +367,7 @@ public class ManagerController implements Initializable {
         if (nameField.getText() != null && colorField.getText() != null && distanceField.getText() != null) {
             if (distanceField.getText().matches(".*[0-9].*")) {
                 Star temp = new Star(nameField.getText(), colorField.getText(), Double.parseDouble(distanceField.getText()));
-                if (!starTree.search(temp)) {
+                if (!starTree.contains(temp)) {
                     starObservableList.add(temp);
                     starTable.setItems(starObservableList);
                     starTree.add(temp);
@@ -431,7 +431,7 @@ public class ManagerController implements Initializable {
             if (starHashTable.containsKey(searchField.getText())) {
                 ObservableList<Star> temp = starObservableList;
                 temp.clear();
-                temp.add(starTree.returnSearch(starHashTable.get(searchField.getText())));
+                temp.add(starTree.getElement(starHashTable.get(searchField.getText())));
                 starTable.setItems(temp);
                 System.out.println("item found");
             }
