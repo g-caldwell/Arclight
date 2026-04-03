@@ -14,8 +14,7 @@
 - Add option to swap between SQLite and MySQL databases
 - Update to Java 25 LTS
 - Update outdated coding conventions
-- Update UI to more modern design
-- Connect Scikit-learn machine learning model to run predictions
+- Connect Scikit-learn machine learning model to make predictions
   
 > [!NOTE]
 > Some updates are tentative and subject to change.
