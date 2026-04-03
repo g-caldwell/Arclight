@@ -1,4 +1,4 @@
-# Project Arclight [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&logoColor=white)](#) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff)](#) [![SQLite](https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white)](#) 
+# Project Arclight [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&logoColor=white)](#) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff)](#) [![SQLite](https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white)](#) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 **Project Arclight is a celestial body cataloging and management software intended for hobbyist astronomers and serious researchers.**
 
@@ -9,5 +9,16 @@
 - Graphical user interface
 - Journal for cataloging observations
 
+## Future Updates:
+- Add MySQL functionality to Arclight
+- Add option to swap between SQLite and MySQL databases
+- Update to Java 25 LTS
+- Update outdated coding conventions
+- Update UI to more modern design
+- Connect Scikit-learn machine learning model to run predictions
+  
+> [!NOTE]
+> Some updates are tentative and subject to change.
+
 ## Author
-[Gabriel Caldwell](gitgub.com/g-caldwell)
+[Gabriel Caldwell](https://wwww.gitgub.com/g-caldwell)
