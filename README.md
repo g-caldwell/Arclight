@@ -17,7 +17,7 @@
 - Journal for cataloging observations
 
 ## Future Updates:
-- Add MySQL functionality to Arclight
+- Add MySQL server functionality to Arclight
 - Add option to swap between SQLite and MySQL databases
 - Update to Java 25 LTS
 - Update outdated coding conventions
