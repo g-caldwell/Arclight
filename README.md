@@ -4,7 +4,7 @@
 
 <div align="center">
 
-**~ Celestial body cataloging and management software intended for hobbyist astronomers and serious researchers.**<br/><br/>
+** ~ Celestial body cataloging and management software intended for hobbyist astronomers and serious researchers.**<br/><br/>
 [![Java](https://img.shields.io/badge/Java-%23ED8B00.svg?logo=openjdk&logoColor=white)](#) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?logo=mysql&logoColor=fff)](#) [![SQLite](https://img.shields.io/badge/SQLite-%2307405e.svg?logo=sqlite&logoColor=white)](#) [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)<br/><br/>
 
 </div>
