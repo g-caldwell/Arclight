@@ -25,6 +25,3 @@
   
 > [!NOTE]
 > Some updates are tentative and subject to change.
-
-## Author
-[Gabriel Caldwell](https://wwww.gitgub.com/g-caldwell)
