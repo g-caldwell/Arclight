@@ -49,20 +49,17 @@ public class BinarySearchTree<E> implements Serializable {
         this.comparator = comparator;
     }
 
-    // ✅
     // Create new node
     private Node<E> newNode(E e) {
         return new Node<E>(e);
     }
 
-    // ✅
     // Add an element to the tree
     public void add(E element) {
         root = addHelper(root, newNode(element));
         size++;
     }
 
-    // ✅
     // Does not handle == case only > or <
     private Node<E> addHelper(Node<E> root, Node<E> node) {
 
@@ -82,14 +79,12 @@ public class BinarySearchTree<E> implements Serializable {
         return root;
     }
 
-    // ✅
     public void addAllFromArray(E[] array) {
         for(E e : array) {
             add(e);
         }
     }
 
-    // ✅
     public void addAllFromArrayList(ArrayList<E> arrayList) {
         for(E e : arrayList) {
             add(e);
@@ -103,7 +98,6 @@ public class BinarySearchTree<E> implements Serializable {
         }
     }
 
-    // ✅
     // Returns null if node does not exist
     private Node<E> removeHelper(Node<E> root, E element) {
         // Returns root when a match is found
@@ -137,7 +131,6 @@ public class BinarySearchTree<E> implements Serializable {
         return root;
     }
 
-    // ✅
     private E predecessor(Node<E> root) {
         // Find the largest element on the left side of the tree
         root = root.left;
@@ -147,7 +140,6 @@ public class BinarySearchTree<E> implements Serializable {
         return root.element;
     }
 
-    // ✅
     private E successor(Node<E> root) {
         // Find the smallest element on the right side of the tree
         root = root.right;
@@ -157,19 +149,16 @@ public class BinarySearchTree<E> implements Serializable {
         return root.element;
     }
 
-    // ✅
     // Empty the tree by removing its root, dereferencing all its elements
     public void empty() {
         size = 0;
         root = null;
     }
 
-    // ✅
     public boolean contains(E element) {
         return containsHelper(root, element);
     }
 
-    // ✅
     private boolean containsHelper(Node<E> root, E element) {
         // Return false if no match is found
         if (root == null) {
@@ -189,13 +178,11 @@ public class BinarySearchTree<E> implements Serializable {
         }
     }
 
-    // ✅
     // Returns the node that contains a given value
     public Node<E> retrieveNode(E element) {
         return retrieveNodeHelper(root, element);
     }
 
-    // ✅
     // Does not handle case where node does not exist
     private Node<E> retrieveNodeHelper(Node<E> root, E element) {
         // Return root if match is found
