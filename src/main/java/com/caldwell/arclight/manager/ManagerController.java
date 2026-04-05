@@ -431,7 +431,7 @@ public class ManagerController implements Initializable {
             if (starHashTable.containsKey(searchField.getText())) {
                 ObservableList<Star> temp = starObservableList;
                 temp.clear();
-                temp.add(starTree.getElement(starHashTable.get(searchField.getText())));
+                temp.add(starTree.retrieveNode(starHashTable.get(searchField.getText())).element);
                 starTable.setItems(temp);
                 System.out.println("item found");
             }
