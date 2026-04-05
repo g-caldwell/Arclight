@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+// Used to store and search for objects with unique identifiers
 public class BinarySearchTree<E> implements Serializable {
 
-    protected TreeNode<E> root;
+    protected Node<E> root;
     protected int size = 0;
     protected java.util.Comparator<E> comparator;
 
@@ -15,28 +16,24 @@ public class BinarySearchTree<E> implements Serializable {
         this.comparator = (element1, element2) -> ((Comparable<E>)element1).compareTo(element2);
     }
 
-    // Passed a comparator with an arbitrary type
+    // Defined comparator constructor
     public BinarySearchTree(Comparator<E> comparator) {
         this.comparator = comparator;
     }
 
-    // Passed an array of elements with an arbitrary type
-    public BinarySearchTree(E[] arr) {
+    // Prefill constructor
+    public BinarySearchTree(E[] prefillArray) {
         this.comparator = (element1, element2) -> ((Comparable<E>)element1).compareTo(element2);
-        for (E e : arr) {
-            add(e);
-        }
+        addAllFromArray(prefillArray);
     }
 
     // Passed an arraylist of elements with an arbitrary type
     public BinarySearchTree(ArrayList<E> arr) {
         this.comparator = (element1, element2) -> ((Comparable<E>)element1).compareTo(element2);
-        for (E e : arr) {
-            add(e);
-        }
+        addAllFromArrayList(arr);
     }
 
-    public TreeNode<E> getRoot() {
+    public Node<E> getRoot() {
         return root;
     }
 
@@ -52,167 +49,176 @@ public class BinarySearchTree<E> implements Serializable {
         this.comparator = comparator;
     }
 
+    // ✅
     // Create new node
-    protected TreeNode<E> newNode(E e) {
-        return new TreeNode<E>(e);
+    private Node<E> newNode(E e) {
+        return new Node<E>(e);
     }
 
-    // search
-    public boolean contains(E e) {
-        // Start at the root of the tree
-        TreeNode<E> current_node = root;
-
-        // Search through the tree until either a dead end is hit or the element is found
-        while (current_node != null) {
-            // Proceed to the left of the current node
-            if (comparator.compare(e, current_node.element) < 0) {
-                current_node = current_node.left;
-            }
-            // Proceed to the right of the current node
-            else if (comparator.compare(e, current_node.element) > 0) {
-                current_node = current_node.right;
-            }
-            // The element was found
-            else {
-                return true;
-            }
-        }
-        // The element was not found
-        return false;
-    }
-
-    public E getElement(E e) {
-        // Start at the root of the tree
-        TreeNode<E> current_node = root;
-        // Search the tree until you reach the element
-        while (current_node != null) {
-            // If the element is less than the current node's, proceed to the left of the current node
-            if (comparator.compare(e, current_node.element) < 0) {
-                current_node = current_node.left;
-            }
-            // If the element is greater than the current node's, proceed to the right of the current node
-            else if (comparator.compare(e, current_node.element) > 0) {
-                current_node = current_node.right;
-            }
-            // The element was found
-            else {
-                break;
-            }
-        }
-        return current_node.element;
-    }
-
+    // ✅
     // Add an element to the tree
     public void add(E element) {
-
-        // Create a new root if the tree is empty
-        if (root == null) {
-            root = newNode(element);
-        }
-        else {
-            // Start at the top of the tree (root node has no parent)
-            TreeNode<E> parent = null;
-            TreeNode<E> current_node = root;
-
-            // Search through the tree until you hit an end-point (leaf)
-            while (current_node != null) {
-                // If the element is less than the current node's, proceed to the left of the current node
-                if (comparator.compare(element, current_node.element) < 0) {
-                    parent = current_node;
-                    current_node = current_node.left;
-                }
-                // If the element is greater than the current node's, proceed to the right of the current node
-                else if (comparator.compare(element, current_node.element) > 0) {
-                    parent = current_node;
-                    current_node = current_node.right;
-                }
-                // The element must be equal to the current node
-                else {
-                    //return false;
-                }
-            }
-            // If the element is less than the leaf's, add to its left child
-            if (comparator.compare(element, parent.element) < 0) {
-                parent.left = newNode(element);
-            }
-            // Otherwise add to its right child
-            else {
-                parent.right = newNode(element);
-            }
-        }
-        // Update size
+        root = addHelper(root, newNode(element));
         size++;
     }
 
-    // delete
-    public boolean delete(E e) {
-        TreeNode<E> parent = null;
-        TreeNode<E> current_node = root;
-        while (current_node != null) {
-            if (comparator.compare(e, current_node.element) < 0) {
-                parent = current_node;
-                current_node = current_node.left;
-            }
-            else if (comparator.compare(e, current_node.element) > 0) {
-                parent = current_node;
-                current_node = current_node.right;
-            }
-            else {
-                break;
-            }
-        }
+    // ✅
+    // Does not handle == case only > or <
+    private Node<E> addHelper(Node<E> root, Node<E> node) {
 
-        if (current_node == null) {
-            return false;
+        // Beginning or end of the tree found, add a node in that position and return it
+        if (root == null) {
+            root = node;
+            return root;
         }
-
-        if (current_node.left == null) {
-            if (parent == null) {
-                root = current_node.right;
-            }
-            else {
-                if (comparator.compare(e, parent.element) < 0) {
-                    parent.left = current_node.right;
-                }
-                else {
-                    parent.right = current_node.right;
-                }
-            }
+        // Return the current node, then recursively call helper method on its left child
+        else if (comparator.compare(node.element, root.element) < 0) {
+            root.left = addHelper(root.left, node);
         }
+        // Return the current node, the recursively call helper method on its right child
         else {
-            TreeNode<E> rightParent = current_node;
-            TreeNode<E> right = current_node.left;
-
-            while (right.right != null) {
-                rightParent = right;
-                right = right.right;
-            }
-
-            current_node.element = right.element;
-
-            if (rightParent.right == right) {
-                rightParent.right = right.left;
-            }
-            else {
-                rightParent.left = right.left;
-            }
+            root.right = addHelper(root.right, node);
         }
-        size--;
-        return true;
+        return root;
     }
 
-    // Empty the tree by removing its root
+    // ✅
+    public void addAllFromArray(E[] array) {
+        for(E e : array) {
+            add(e);
+        }
+    }
+
+    // ✅
+    public void addAllFromArrayList(ArrayList<E> arrayList) {
+        for(E e : arrayList) {
+            add(e);
+        }
+    }
+
+    // delete
+    public void delete(E element) {
+        if (contains(element)) {
+            removeHelper(root, element);
+        }
+    }
+
+    // ✅
+    // Returns null if node does not exist
+    private Node<E> removeHelper(Node<E> root, E element) {
+        // Returns root when a match is found
+        if (root == null) {
+            return root;
+        }
+        // Recursively call helper method on left child of the root
+        else if (comparator.compare(element, root.element) < 0) {
+            root.left = removeHelper(root.left, element);
+        }
+        // Recursively call helper method on right child of the root
+        else if (comparator.compare(element, root.element) > 0) {
+            root.right = removeHelper(root.right, element);
+        }
+        else {
+            if (root.left == null && root.right == null) {
+                root = null;
+                return root;
+            }
+            // If only the right child exists
+            else if (root.right != null) {
+                root.element = successor(root);
+                root.right = removeHelper(root.right, root.element);
+            }
+            // If only the left child exists
+            else {
+                root.element = predecessor(root);
+                root.left = removeHelper(root.left, root.element);
+            }
+        }
+        return root;
+    }
+
+    // ✅
+    private E predecessor(Node<E> root) {
+        // Find the largest element on the left side of the tree
+        root = root.left;
+        while (root.right != null) {
+            root = root.right;
+        }
+        return root.element;
+    }
+
+    // ✅
+    private E successor(Node<E> root) {
+        // Find the smallest element on the right side of the tree
+        root = root.right;
+        while(root.left != null) {
+            root = root.left;
+        }
+        return root.element;
+    }
+
+    // ✅
+    // Empty the tree by removing its root, dereferencing all its elements
     public void empty() {
         size = 0;
         root = null;
     }
 
-    class TreeNode<E> implements Serializable {
-        protected E element;
-        protected TreeNode<E> left;
-        protected TreeNode<E> right;
+    // ✅
+    public boolean contains(E element) {
+        return containsHelper(root, element);
+    }
 
-        public TreeNode(E e) {
+    // ✅
+    private boolean containsHelper(Node<E> root, E element) {
+        // Return false if no match is found
+        if (root == null) {
+            return false;
+        }
+        // Return true if a match is found
+        else if (comparator.compare(element, root.element) == 0) {
+            return true;
+        }
+        // Recursively call helper method on left child of the root
+        else if (comparator.compare(element, root.element) < 0) {
+            return containsHelper(root.left, element);
+        }
+        // Recursively call helper method on the right child of the root
+        else {
+            return containsHelper(root.right, element);
+        }
+    }
+
+    // ✅
+    // Returns the node that contains a given value
+    public Node<E> retrieveNode(E element) {
+        return retrieveNodeHelper(root, element);
+    }
+
+    // ✅
+    // Does not handle case where node does not exist
+    private Node<E> retrieveNodeHelper(Node<E> root, E element) {
+        // Return root if match is found
+        if (comparator.compare(element, root.element) == 0) {
+            return root;
+        }
+        // Recursively call helper method on left child of the root
+        else if (comparator.compare(element, root.element) < 0) {
+            root = retrieveNodeHelper(root.left, element);
+        }
+        // Recursively call helper method on right child of the root
+        else {
+            root = retrieveNodeHelper(root.right, element);
+        }
+        return root;
+    }
+
+    class Node<E> implements Serializable {
+        protected E element;
+        protected Node<E> left;
+        protected Node<E> right;
+
+        public Node(E e) {
             element = e;
         }
     }
